@@ -33,6 +33,11 @@
     header {
       max-width: 960px;
       margin: 0 auto 24px auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
 
     /* header/logo styles moved to shared-header.css */
@@ -218,21 +223,21 @@
         </div>
       </a>
 
-      <!-- İleride eklenecek editörler için placeholder kart -->
-      <div class="card coming">
+      <!-- Fake Profile Generator kartı -->
+      <a class="card" href="profile-generator.html">
         <div class="card-header">
-          <div class="card-title">Coming soon</div>
-          <span class="card-tag">New tool</span>
+          <div class="card-title">Fake Profile Generator</div>
+          <span class="card-tag">Test Data / Faker</span>
         </div>
         <div class="card-desc">
-          Another in-browser editor or utility. You can plug more tools into this home page later.
+          Generate consistent fake profiles with realistic TC ID, birth date, phone, address, email, IBAN and customer ID.
         </div>
         <div class="card-footer">
           <button type="button" class="btn">
-            <span>Not ready yet</span>
+            <span>Open Generator</span> →
           </button>
         </div>
-      </div>
+      </a>
     </div>
   </main>
 
