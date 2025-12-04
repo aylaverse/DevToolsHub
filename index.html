@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dev Tools – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: radial-gradient(circle at 0% 0%, #dbeafe 0, #e5e7eb 45%, #e5e7eb 100%);
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      max-width: 960px;
+      margin: 0 auto 24px auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f9fafb;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.4);
+    }
+
+    .logo-text-main {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .logo-text-sub {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      white-space: nowrap;
+    }
+
+    .card-desc {
+      font-size: 0.87rem;
+      color: #4b5563;
+    }
+
+    .card-footer {
+      margin-top: 6px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 7px 14px;
+      border: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: #ffffff;
+      box-shadow: 0 8px 22px rgba(56, 189, 248, 0.25);
+    }
+
+    .btn span {
+      font-size: 0.9rem;
+    }
+
+    .coming {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .coming .btn {
+      background: #e5e7eb;
+      color: #6b7280;
+      box-shadow: none;
+    }
+
+    footer {
+      max-width: 960px;
+      margin: 24px auto 0;
+      font-size: 0.78rem;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .logo-text-main {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">&lt;/&gt;</div>
+      <div>
+        <div class="logo-text-main">Dev Tools Hub</div>
+        <div class="logo-text-sub">
+          A small collection of in-browser editors & utilities.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-title">Available editors</div>
+    <div class="grid">
+      <!-- XML editor kartı -->
+      <a class="card" href="xml-editor.html">
+        <div class="card-header">
+          <div class="card-title">XML Zip Studio</div>
+          <span class="card-tag">XML / ZIP</span>
+        </div>
+        <div class="card-desc">
+          Edit one or more XML files, load them from a ZIP archive and download everything back as a ZIP bundle.
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn">
+            <span>Open editor</span> →
+          </button>
+        </div>
+      </a>
+
+      <!-- İleride eklenecek editörler için placeholder kart -->
+      <div class="card coming">
+        <div class="card-header">
+          <div class="card-title">Coming soon</div>
+          <span class="card-tag">New tool</span>
+        </div>
+        <div class="card-desc">
+          Another in-browser editor or utility. You can plug more tools into this home page later.
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn">
+            <span>Not ready yet</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    You can add more tools here later by creating new HTML files and adding cards that link to them.
+  </footer>
+</body>
+</html>
