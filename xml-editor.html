@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>XML Zip Studio – Multi XML Editor + ZIP</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <title>Aylaverse XML Editor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- CodeMirror 5 (code editor) -->
@@ -45,11 +47,21 @@
     }
 
     header {
-      margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-link:hover {
+  opacity: 0.9;
+}
+
 
     .logo {
       display: flex;
@@ -329,7 +341,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      background: linear-gradient(135deg, #6366f1, #22d3ee);
       color: white;
       font-weight: 500;
       box-shadow: 0 8px 22px rgba(56, 189, 248, 0.25);
@@ -429,16 +441,27 @@
 </head>
 <body>
   <header>
-    <div class="logo">
-      <div class="logo-icon">&lt;/&gt;</div>
-      <div>
-        <div class="logo-text-main">XML Zip Studio</div>
-        <div class="logo-text-sub">
-          Edit multiple XML files, load them from ZIP, and export everything back into a ZIP bundle.
-        </div>
+  <!-- Logo tıklanınca anasayfaya gider -->
+  <a href="index.html" class="logo logo-link">
+    <div class="logo-icon">&lt;/&gt;</div>
+    <div>
+      <div class="logo-text-main">Aylaverse XML Editor</div>
+      <div class="logo-text-sub">
+        Create and manage multiple XML files right inside your browser — ZIP support included.
       </div>
     </div>
-  </header>
+  </a>
+
+  <!-- Sağda küçük geri dön butonu -->
+  <button
+    type="button"
+    class="secondary"
+    onclick="window.location.href='index.html'"
+  >
+    ← Back to tools
+  </button>
+</header>
+
 
   <div class="main-layout">
     <!-- LEFT: mini file tree -->
