@@ -10,149 +10,105 @@
 
   <link rel="stylesheet" href="shared-header.css">
   <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    * { box-sizing: border-box; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
 
     body {
       margin: 0;
-      padding: 20px;
-      background: radial-gradient(circle at 0% 0%, #dbeafe 0, #e5e7eb 45%, #eef2ff 100%);
+      padding: 28px 20px;
+      background: radial-gradient(circle at 0% 0%, #f0f7ff 0, #f7f9fc 45%, #fbfdff 100%);
       color: #0f172a;
-      overflow-x: hidden;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    
+
     body.dark {
-      background: radial-gradient(circle at 10% 10%, #07101a 0, #0b1320 40%, #08111a 100%);
+      background: linear-gradient(180deg,#07101a 0%, #071428 100%);
       color: #e6eef8;
     }
 
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg,#6366f1,#22d3ee);
-      color: white;
-      box-shadow: 0 8px 22px rgba(56,189,248,0.18);
-      transition: transform .08s ease, box-shadow .12s ease;
-      font-weight: 600;
+    .container { max-width: 980px; margin: 18px auto; }
+
+    /* Top panel with subtle glass card */
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(246,250,255,0.85));
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 14px 40px rgba(15,23,42,0.06);
     }
 
-    button.secondary { background: transparent; color: #0f172a; box-shadow: none; border: 1px solid rgba(99,102,241,0.12); }
-    button.secondary:hover { background: #eef2ff; }
-    button:active { transform: translateY(0); box-shadow: 0 4px 10px rgba(15,23,42,0.12); }
-
-    body.dark button {
-      background: linear-gradient(135deg,#2b2350,#3b2a60);
-      color: #f3f0ff;
-    }
-
-    button svg { width:16px; height:16px; display:inline-block; vertical-align:middle; fill:currentColor; }
-
-    h2 { margin: 6px 0 4px; font-weight: 700; letter-spacing: -0.2px; }
-
-    p, .note { font-weight: 500; }
-
-    .input-group {
-      margin: 12px 0;
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .input-group label {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #0f172a;
-    }
-
-    .input-group input {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(148,163,184,0.6);
-      background: #ffffff;
-      color: #0f172a;
-      font-size: 0.9rem;
-      flex: 1;
-      min-width: 120px;
-    }
-
-    body.dark .input-group input {
-      background: #0f1724;
-      color: #dbeafe;
-      border-color: rgba(255,255,255,0.06);
-    }
-
-    .profile-card {
-      margin-top: 20px;
-      border-radius: 14px;
-      padding: 16px;
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(148,163,184,0.6);
-      box-shadow: 0 10px 28px rgba(15,23,42,0.08);
-    }
-
-    body.dark .profile-card {
-      background: rgba(10,14,18,0.7);
+    body.dark .panel {
+      background: linear-gradient(180deg, rgba(6,10,15,0.55), rgba(7,10,20,0.45));
       border-color: rgba(255,255,255,0.04);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.6);
     }
 
-    .profile-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(148,163,184,0.2);
-      font-size: 0.9rem;
+    h2 { margin: 0 0 4px; font-weight: 700; font-size: 1.3rem; letter-spacing:-0.2px; }
+    p { margin: 0 0 12px; color: #475569; font-weight:500; }
+    body.dark p { color: #9fb0d6; }
+
+    /* Input group becomes a responsive grid */
+    .input-group{
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 6px;
+      align-items: center;
+      margin-top: 12px;
     }
 
-    body.dark .profile-item {
-      border-bottom-color: rgba(255,255,255,0.04);
-    }
+    .input-pair { display: flex; gap: 6px; align-items: center; }
+    .input-pair input { width: 80px; }
+    .input-pair label { margin: 0; font-weight: 600; white-space: nowrap; }
 
-    .profile-item:last-child { border-bottom: none; }
+    .input-group label{ font-weight:600; color: #334155; font-size:0.95rem; }
+    .input-group input{ padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.5); background: #fff; color:#0f172a; font-size:0.95rem; }
+    body.dark .input-group input{ background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.04); color:#dbeafe; }
 
-    .profile-label { font-weight: 600; color: #4b5563; }
-    
-    body.dark .profile-label { color: #9ca3af; }
+    /* Buttons */
+    button{ border: none; border-radius: 10px; padding: 8px 12px; cursor:pointer; display:inline-flex; gap:8px; align-items:center; font-weight:700; font-size:0.95rem; transition:transform .08s ease, box-shadow .12s ease; }
+    button:hover{ transform: translateY(-2px); }
+    button:active{ transform:none; }
 
-    .profile-value { font-family: monospace; font-weight: 500; color: #0f172a; }
+    button.primary{ background: linear-gradient(90deg,#6366f1,#06b6d4); color:#fff; box-shadow: 0 10px 28px rgba(6,182,212,0.08); }
+    button.secondary{ background: transparent; color:#334155; border:1px solid rgba(99,102,241,0.12); }
+    body.dark button.secondary{ color:#dbeafe; border-color: rgba(255,255,255,0.04); }
 
-    body.dark .profile-value { color: #e6eef8; }
+    /* Small pill export buttons */
+    .export-btn, .copy-btn{ padding:6px 10px; font-size:0.85rem; border-radius:8px; background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+    .export-btn:hover, .copy-btn:hover{ background:#e0e7ff; }
+    body.dark .export-btn, body.dark .copy-btn{ background:#2b2346; color:#f3f0ff; border-color:#4b3f73; }
+    .export-btn svg, .copy-btn svg { width: 14px; height: 14px; }
 
-    .copy-btn {
-      padding: 4px 8px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      background: #eef2ff;
-      color: #4f46e5;
-      border: 1px solid #c7d2fe;
-      border-radius: 4px;
-      transition: background 0.1s ease;
-    }
+    /* Profile card */
+    .profile-card{ margin-top:16px; border-radius:12px; padding:14px; background: linear-gradient(180deg,#ffffff,#fbfdff); border:1px solid rgba(148,163,184,0.15); box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
+    body.dark .profile-card{ background: linear-gradient(180deg, rgba(6,10,15,0.45), rgba(10,14,18,0.35)); border-color: rgba(255,255,255,0.04); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
 
-    .copy-btn:hover { background: #dbeafe; }
+    .profile-item{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed rgba(148,163,184,0.08); }
+    .profile-item:last-child{ border-bottom:none; }
+    .profile-label{ color:#64748b; font-weight:600; }
+    .profile-value{ color:#0f172a; font-family:monospace; font-weight:600; }
+    body.dark .profile-label{ color:#9ca3af; } body.dark .profile-value{ color:#e6eef8; }
 
-    body.dark .copy-btn {
-      background: #3b2a60;
-      color: #f3f0ff;
-      border-color: #6b5b95;
-    }
+    /* Make the first row (name) stand out */
+    .profile-card .profile-item:first-child .profile-value{ font-size:1.05rem; font-weight:800; }
 
-    #msg { margin-top: 8px; font-size: 13px; }
-    #msg.error { color: #ef4444; font-weight:600; }
-    #msg.ok { color: #16a34a; font-weight:600; }
+    /* Table styling */
+    #profilesTable table{ width:100%; border-collapse:collapse; font-size:0.95rem; }
+    #profilesTable th, #profilesTable td{ padding:10px 12px; border-bottom:1px solid rgba(148,163,184,0.08); text-align:left; }
+    #profilesTable thead th{ background:rgba(99,102,241,0.06); font-weight:700; }
+    body.dark #profilesTable thead th{ background: rgba(255,255,255,0.03); }
+    #profilesTable tr:hover { background: rgba(99,102,241,0.02); }
+    body.dark #profilesTable tr:hover { background: rgba(255,255,255,0.01); }
+    .row-copy-btn { padding:4px 6px; font-size:0.8rem; background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:3px; transition: background 0.15s; }
+    .row-copy-btn:hover { background:#e0e7ff; }
+    body.dark .row-copy-btn { background:#2b2346; color:#f3f0ff; border-color:#4b3f73; }
+    body.dark .row-copy-btn:hover { background:#3b3456; }
 
-    footer { margin-top:40px; padding:20px 0; text-align:center; font-size:13px; color:#64748b; }
+    #msg{ margin-top:10px; font-size:0.95rem; }
+    #msg.error{ color:#ef4444; font-weight:700; } #msg.ok{ color:#16a34a; font-weight:700; }
 
-    @media (max-width:900px) {
-      .input-group { flex-direction: column; }
-      .input-group input { width: 100%; }
-    }
+    footer{ margin-top:28px; padding:20px 0; text-align:center; font-size:13px; color:#64748b; }
+
+    @media (max-width:900px){ .input-group{ grid-template-columns: 1fr; } .container{ padding:0 12px; } }
   </style>
 </head>
 
@@ -173,26 +129,52 @@
   </div>
 </header>
 
-<h2>Fake Profile Generator</h2>
-<p style="font-size:13px;color:#4b5563;font-weight:500;">
-  Generate consistent fake profiles with realistic TC ID, birth date, phone, address, email, IBAN and customer ID — perfect for testing and demos.
-</p>
+<div class="container">
+  <div class="panel">
+    <h2>Fake Profile Generator</h2>
+    <p>Generate consistent fake profiles with realistic TC ID, birth date, phone, address, email, IBAN and customer ID — perfect for testing and demos.</p>
 
-<div class="input-group">
-  <label for="ageInput">Yaş (Age):</label>
-  <input type="number" id="ageInput" min="18" max="100" value="30" placeholder="Enter age (18-100)">
-  <button id="btnGenerate"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 12a8 8 0 018-8v0a8 8 0 100 16 8 8 0 00-8-8z M9 6l3 3m0 0l3-3m-3 3V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Generate Profile</button>
-  <button id="btnClear" class="secondary"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Clear</button>
-</div>
+    <div style="display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap;">
+      <div class="input-pair">
+        <label for="ageInput">Age:</label>
+        <input type="number" id="ageInput" min="18" max="100" value="30" placeholder="30">
+      </div>
+      <div class="input-pair">
+        <label for="countInput">Count:</label>
+        <input type="number" id="countInput" min="1" max="500" value="1">
+      </div>
+      <label style="display:inline-flex; align-items:center; gap:6px; margin:0; white-space:nowrap;">
+        <input type="checkbox" id="randomizeAge"> 
+        <span style="font-size:0.9rem">Randomize age</span>
+      </label>
+    </div>
 
-<div id="msg"></div>
+    <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+      <button id="btnGenerate" class="primary">Generate Profile</button>
+      <button id="btnGenerateBatch" class="secondary">Generate Batch</button>
+      <button id="btnClear" class="secondary">Clear</button>
+    </div><div id="msg"></div>
 
 <div id="profileContainer"></div>
+
+<!-- Batch table and export controls -->
+<div id="batchControls" style="margin-top:18px; display:none; gap:8px; align-items:center; flex-wrap:wrap;"> 
+  <div id="batchInfo" style="font-size:0.95rem;color:#475569;margin-right:8px">0 profiles</div>
+  <button id="exportCsv" class="export-btn" title="Download CSV (UTF-8 with BOM for Excel)">Download CSV</button>
+  <button id="exportXlsx" class="export-btn" title="Download XLSX (Excel format)">Download XLSX</button>
+</div>
+
+<div id="profilesTable" style="margin-top:12px; overflow:auto; border-radius:8px; border:1px solid rgba(148,163,184,0.12);"></div>
+
+  </div>
+</div>
 
 <footer>
   © 2025 Aylaverse — Browser-based developer tools.
 </footer>
 
+<!-- SheetJS for XLSX export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
   /* ========== THEME / DARK MODE ========== */
   const themeBtn = document.getElementById("themeToggle");
@@ -306,12 +288,26 @@
   }
 
   function generateProfile() {
+    const randomize = document.getElementById('randomizeAge');
     const age = parseInt(ageInput.value);
-    if (isNaN(age) || age < 18 || age > 100) {
-      setMessage("Lütfen 18-100 arasında bir yaş girin.", "error");
-      return;
+    const useAge = (randomize && randomize.checked) ? (Math.floor(Math.random()*83)+18) : age;
+    if (!randomize || !randomize.checked) {
+      if (isNaN(age) || age < 18 || age > 100) {
+        setMessage("Please enter an age between 18-100.", "error");
+        return;
+      }
     }
 
+    const profile = createProfile(useAge);
+    displayProfile(profile);
+    // set single-profile dataset for exports
+    profilesData = [profile];
+    updateBatchUI();
+    setMessage("Profile generated successfully.", "ok");
+  }
+
+  // create a single profile object (no display)
+  function createProfile(age){
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
     const tcID = generateTCID();
@@ -321,8 +317,7 @@
     const email = generateEmail(firstName, lastName);
     const iban = generateIBAN();
     const customerID = generateCustomerID();
-
-    displayProfile({
+    return {
       name: `${firstName} ${lastName}`,
       tcID,
       birthDate,
@@ -331,18 +326,132 @@
       email,
       iban,
       customerID
-    });
-
-    setMessage("Profil başarıyla oluşturuldu.", "ok");
+    };
   }
+
+  // Batch generation & export helpers
+  let profilesData = [];
+  const countInput = document.getElementById('countInput');
+  const btnGenerateBatch = document.getElementById('btnGenerateBatch');
+  const exportCsv = document.getElementById('exportCsv');
+  const exportXlsx = document.getElementById('exportXlsx');
+  const batchControls = document.getElementById('batchControls');
+  const profilesTable = document.getElementById('profilesTable');
+
+  function updateBatchUI(){
+    const count = profilesData ? profilesData.length : 0;
+    const info = document.getElementById('batchInfo');
+    if (count > 0){
+      batchControls.style.display = 'flex';
+      info.textContent = count + (count === 1 ? ' profile' : ' profiles');
+      renderProfilesTable(profilesData);
+      exportCsv.removeAttribute('disabled');
+      exportXlsx.removeAttribute('disabled');
+    } else {
+      batchControls.style.display = 'none';
+      profilesTable.innerHTML = '';
+      if (info) info.textContent = '0 profiles';
+      exportCsv.setAttribute('disabled', '');
+      exportXlsx.setAttribute('disabled', '');
+    }
+  }
+
+  function generateBatch(){
+    const age = parseInt(ageInput.value);
+    const count = parseInt(countInput.value) || 1;
+    const randomize = document.getElementById('randomizeAge');
+    if (!randomize || !randomize.checked) {
+      if (isNaN(age) || age < 18 || age > 100) { setMessage("Please enter an age between 18-100.", "error"); return; }
+    }
+    if (isNaN(count) || count < 1 || count > 500) { setMessage("Count must be between 1-500.", "error"); return; }
+    profilesData = [];
+    for (let i=0;i<count;i++){
+      const useAge = (randomize && randomize.checked) ? (Math.floor(Math.random()*83)+18) : age; // 18-100 random
+      profilesData.push(createProfile(useAge));
+    }
+    setMessage(`${count} profiles generated successfully.`, 'ok');
+    updateBatchUI();
+  }
+
+  function renderProfilesTable(data){
+    if (!data || !data.length){ profilesTable.innerHTML = ''; return; }
+    let html = '<table style="width:100%;border-collapse:collapse"><thead><tr style="text-align:left"><th style="padding:8px;border-bottom:1px solid #e5e7eb">Ad Soyad</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">TC</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">Doğum</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">Telefon</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">E-Posta</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">IBAN</th><th style="padding:8px;border-bottom:1px solid #e5e7eb">İşlem</th></tr></thead><tbody>';
+    data.forEach((d, idx) => {
+      html += `<tr data-idx="${idx}"><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${escapeHtml(d.name)}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${d.tcID}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${d.birthDate}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${d.phone}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${d.email}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)">${d.iban}</td><td style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.04)"><button class="row-copy-btn" onclick="copyRowToClipboard(${idx})"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;fill:currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Copy</button></td></tr>`;
+    });
+    html += '</tbody></table>';
+    profilesTable.innerHTML = html;
+  }
+
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function copyRowToClipboard(idx){
+    if (!profilesData || !profilesData[idx]) return;
+    const p = profilesData[idx];
+    const text = `${p.name} | ${p.tcID} | ${p.birthDate} | ${p.phone} | ${p.address} | ${p.email} | ${p.iban} | ${p.customerID}`;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target.closest('.row-copy-btn');
+      if (btn) {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;fill:currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> Copied';
+        setTimeout(() => { btn.innerHTML = originalText; }, 1500);
+      }
+    }).catch(err => console.error('Copy failed:', err));
+  }
+
+  function timestamp(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    return d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds());
+  }
+
+  function downloadCSV(){
+    if (!profilesData || !profilesData.length) return;
+    const headers = ['Name','TC','BirthDate','Phone','Address','Email','IBAN','CustomerID'];
+    const rows = profilesData.map(p => [p.name,p.tcID,p.birthDate,p.phone,p.address,p.email,p.iban,p.customerID]);
+    let csv = headers.join(',') + '\n';
+    rows.forEach(r => {
+      csv += r.map(cell => '"' + String(cell).replace(/"/g,'""') + '"').join(',') + '\n';
+    });
+    // Prefix BOM so Excel on Windows recognizes UTF-8
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csv], {type: 'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const name = `profiles-${timestamp()}.csv`;
+    const a = document.createElement('a');
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadXLSX(){
+    if (!profilesData || !profilesData.length) return;
+    // Ensure fields are strings to preserve Turkish characters
+    const json = profilesData.map(p => ({Name:String(p.name), TC:String(p.tcID), BirthDate:String(p.birthDate), Phone:String(p.phone), Address:String(p.address), Email:String(p.email), IBAN:String(p.iban), CustomerID:String(p.customerID) }));
+    const ws = XLSX.utils.json_to_sheet(json);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Profiles');
+    const wbout = XLSX.write(wb, {bookType:'xlsx', type:'array'});
+    const blob = new Blob([wbout], {type: 'application/octet-stream'});
+    const url = URL.createObjectURL(blob);
+    const name = `profiles-${timestamp()}.xlsx`;
+    const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  }
+
+  btnGenerateBatch.addEventListener('click', generateBatch);
+  exportCsv.addEventListener('click', downloadCSV);
+  exportXlsx.addEventListener('click', downloadXLSX);
 
   function displayProfile(profile) {
     profileContainer.innerHTML = `
       <div class="profile-card">
-        <div class="profile-item">
-          <span class="profile-label">Ad – Soyad</span>
-          <span class="profile-value">${profile.name}</span>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div style="width:56px;height:56px;border-radius:999px;background:linear-gradient(90deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px">${profile.name.charAt(0)}</div>
+          <div>
+            <div style="font-size:1.05rem;font-weight:800;color:var(--text-color, #0f172a)">${profile.name}</div>
+            <div style="font-size:0.85rem;color:#64748b">Müşteri No: ${profile.customerID}</div>
+          </div>
         </div>
+
         <div class="profile-item">
           <span class="profile-label">TC Kimlik No</span>
           <span class="profile-value">${profile.tcID}</span>
@@ -367,10 +476,6 @@
           <span class="profile-label">IBAN</span>
           <span class="profile-value">${profile.iban}</span>
         </div>
-        <div class="profile-item">
-          <span class="profile-label">Müşteri No</span>
-          <span class="profile-value">${profile.customerID}</span>
-        </div>
       </div>
     `;
   }
@@ -383,9 +488,15 @@
   btnGenerate.addEventListener("click", generateProfile);
   btnClear.addEventListener("click", () => {
     ageInput.value = "30";
+    countInput.value = "1";
+    const randomize = document.getElementById('randomizeAge');
+    if (randomize) randomize.checked = false;
     msg.textContent = "";
     msg.className = "";
     profileContainer.innerHTML = "";
+    profilesData = [];
+    updateBatchUI();
+    profilesTable.innerHTML = '';
   });
 
   // Enter tuşu ile generate
