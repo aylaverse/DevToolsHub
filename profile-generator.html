@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"/>
+  <title>Aylaverse — Profile Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+
+  <link rel="stylesheet" href="shared-header.css">
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: radial-gradient(circle at 0% 0%, #dbeafe 0, #e5e7eb 45%, #eef2ff 100%);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    
+    body.dark {
+      background: radial-gradient(circle at 10% 10%, #07101a 0, #0b1320 40%, #08111a 100%);
+      color: #e6eef8;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg,#6366f1,#22d3ee);
+      color: white;
+      box-shadow: 0 8px 22px rgba(56,189,248,0.18);
+      transition: transform .08s ease, box-shadow .12s ease;
+      font-weight: 600;
+    }
+
+    button.secondary { background: transparent; color: #0f172a; box-shadow: none; border: 1px solid rgba(99,102,241,0.12); }
+    button.secondary:hover { background: #eef2ff; }
+    button:active { transform: translateY(0); box-shadow: 0 4px 10px rgba(15,23,42,0.12); }
+
+    body.dark button {
+      background: linear-gradient(135deg,#2b2350,#3b2a60);
+      color: #f3f0ff;
+    }
+
+    button svg { width:16px; height:16px; display:inline-block; vertical-align:middle; fill:currentColor; }
+
+    h2 { margin: 6px 0 4px; font-weight: 700; letter-spacing: -0.2px; }
+
+    p, .note { font-weight: 500; }
+
+    .input-group {
+      margin: 12px 0;
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    .input-group input {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 0.9rem;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    body.dark .input-group input {
+      background: #0f1724;
+      color: #dbeafe;
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .profile-card {
+      margin-top: 20px;
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.08);
+    }
+
+    body.dark .profile-card {
+      background: rgba(10,14,18,0.7);
+      border-color: rgba(255,255,255,0.04);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+    }
+
+    .profile-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      font-size: 0.9rem;
+    }
+
+    body.dark .profile-item {
+      border-bottom-color: rgba(255,255,255,0.04);
+    }
+
+    .profile-item:last-child { border-bottom: none; }
+
+    .profile-label { font-weight: 600; color: #4b5563; }
+    
+    body.dark .profile-label { color: #9ca3af; }
+
+    .profile-value { font-family: monospace; font-weight: 500; color: #0f172a; }
+
+    body.dark .profile-value { color: #e6eef8; }
+
+    .copy-btn {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      background: #eef2ff;
+      color: #4f46e5;
+      border: 1px solid #c7d2fe;
+      border-radius: 4px;
+      transition: background 0.1s ease;
+    }
+
+    .copy-btn:hover { background: #dbeafe; }
+
+    body.dark .copy-btn {
+      background: #3b2a60;
+      color: #f3f0ff;
+      border-color: #6b5b95;
+    }
+
+    #msg { margin-top: 8px; font-size: 13px; }
+    #msg.error { color: #ef4444; font-weight:600; }
+    #msg.ok { color: #16a34a; font-weight:600; }
+
+    footer { margin-top:40px; padding:20px 0; text-align:center; font-size:13px; color:#64748b; }
+
+    @media (max-width:900px) {
+      .input-group { flex-direction: column; }
+      .input-group input { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo logo-link" aria-label="Back to Aylaverse Home">
+    <div class="logo-icon">A</div>
+    <div>
+      <div class="logo-text-main">Aylaverse Tools</div>
+      <div class="logo-text-sub">Browser micro‑apps & utilities</div>
+    </div>
+  </a>
+
+  <div style="display:flex; gap:8px; align-items:center;">
+    <button type="button" class="secondary" onclick="window.location.href='index.html'">← Back to tools</button>
+    <button id="themeToggle">🌙 Dark Mode</button>
+  </div>
+</header>
+
+<h2>Fake Profile Generator</h2>
+<p style="font-size:13px;color:#4b5563;font-weight:500;">
+  Generate consistent fake profiles with realistic TC ID, birth date, phone, address, email, IBAN and customer ID — perfect for testing and demos.
+</p>
+
+<div class="input-group">
+  <label for="ageInput">Yaş (Age):</label>
+  <input type="number" id="ageInput" min="18" max="100" value="30" placeholder="Enter age (18-100)">
+  <button id="btnGenerate"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 12a8 8 0 018-8v0a8 8 0 100 16 8 8 0 00-8-8z M9 6l3 3m0 0l3-3m-3 3V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Generate Profile</button>
+  <button id="btnClear" class="secondary"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Clear</button>
+</div>
+
+<div id="msg"></div>
+
+<div id="profileContainer"></div>
+
+<footer>
+  © 2025 Aylaverse — Browser-based developer tools.
+</footer>
+
+<script>
+  /* ========== THEME / DARK MODE ========== */
+  const themeBtn = document.getElementById("themeToggle");
+
+  function applyTheme(mode){
+    if(mode === "dark") {
+      document.body.classList.add("dark");
+      themeBtn.textContent = "☀️ Light Mode";
+    } else {
+      document.body.classList.remove("dark");
+      themeBtn.textContent = "🌙 Dark Mode";
+    }
+    localStorage.setItem("aylaverse-theme", mode);
+  }
+
+  themeBtn.addEventListener("click", () => {
+    const dark = document.body.classList.contains("dark");
+    applyTheme(dark ? "light" : "dark");
+  });
+
+  applyTheme(localStorage.getItem("aylaverse-theme") || "light");
+
+  /* ========== PROFILE GENERATOR ========== */
+
+  const ageInput = document.getElementById("ageInput");
+  const btnGenerate = document.getElementById("btnGenerate");
+  const btnClear = document.getElementById("btnClear");
+  const msg = document.getElementById("msg");
+  const profileContainer = document.getElementById("profileContainer");
+
+  // Turkish names
+  const firstNames = ["Ahmet", "Mehmet", "Fatih", "Zeynep", "Ayşe", "Elif", "Emre", "Serkan", "Nuray", "Defne", "Gökhan", "Sevda", "İbrahim", "Merve", "Hakan", "Neslihan", "Yusuf", "Pınar", "Murat", "Zehra"];
+  const lastNames = ["Kaya", "Yıldız", "Demir", "Aydın", "Çetin", "Güneş", "Öztürk", "Şahin", "Arslan", "Akçay", "Tanju", "Kılıç", "Yaman", "Erol", "Gül", "Soylu", "Tekdal", "Toros", "Durak", "Korkmaz"];
+
+  // Turkish cities and districts
+  const addresses = [
+    "İstanbul, Beşiktaş, Ortaköy Cad. No:45",
+    "Ankara, Çankaya, Tunalı Hilmi Cad. No:12",
+    "İzmir, Alsancak, Gazi Bulvarı No:78",
+    "Bursa, Osmangazi, Ulu Cami Mh. No:34",
+    "Antalya, Muratpaşa, Cumhuriyet Cad. No:56",
+    "Gaziantep, Şahinbey, Atatürk Bulvarı No:23",
+    "Konya, Selçuklu, Mevlana Cad. No:89",
+    "Diyarbakır, Sur, Gazi Paşa Cad. No:11",
+    "Sakarya, Adapazarı, İstasyon Cad. No:67",
+    "Mersin, Akdeniz, Atatürk Cad. No:44"
+  ];
+
+  function generateTCID() {
+    // TC Kimlik: 11 digits, first digit non-zero, last digit check digit
+    let tc = "";
+    for (let i = 0; i < 10; i++) {
+      tc += Math.floor(Math.random() * 10);
+    }
+    // Ensure first digit is not 0
+    tc = (Math.floor(Math.random() * 9) + 1) + tc;
+    // Calculate check digit (simplified TC ID algorithm)
+    let oddSum = 0, evenSum = 0;
+    for (let i = 0; i < 10; i++) {
+      if (i % 2 === 0) oddSum += parseInt(tc[i]);
+      else evenSum += parseInt(tc[i]);
+    }
+    let checkDigit = (oddSum * 7 - evenSum) % 10;
+    return tc + checkDigit;
+  }
+
+  function generatePhoneNumber() {
+    // Turkish phone format: 05XX XXXXXXX
+    const operator = Math.floor(Math.random() * 10);
+    let phone = "05" + operator;
+    for (let i = 0; i < 7; i++) {
+      phone += Math.floor(Math.random() * 10);
+    }
+    return phone;
+  }
+
+  function generateIBAN() {
+    // Turkish IBAN format: TR + 2 check digits + 5 digits bank + 1 digit reserve + 16 digits account
+    let iban = "TR";
+    for (let i = 0; i < 24; i++) {
+      iban += Math.floor(Math.random() * 10);
+    }
+    return iban;
+  }
+
+  function generateCustomerID() {
+    // Format: 8 digits
+    let id = "";
+    for (let i = 0; i < 8; i++) {
+      id += Math.floor(Math.random() * 10);
+    }
+    return id;
+  }
+
+  function generateEmail(firstName, lastName) {
+    const domain = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com", "icloud.com"][Math.floor(Math.random() * 5)];
+    const separator = ['.', '', '_'][Math.floor(Math.random() * 3)];
+    const num = Math.floor(Math.random() * 9999);
+    return (firstName.toLowerCase() + separator + lastName.toLowerCase() + (num > 0 ? num : "")) + "@" + domain;
+  }
+
+  function calculateBirthDate(age) {
+    const today = new Date();
+    const birthYear = today.getFullYear() - age;
+    const birthMonth = Math.floor(Math.random() * 12) + 1;
+    const daysInMonth = new Date(birthYear, birthMonth, 0).getDate();
+    const birthDay = Math.floor(Math.random() * daysInMonth) + 1;
+
+    const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
+    return birthDate.toLocaleDateString('tr-TR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  }
+
+  function generateProfile() {
+    const age = parseInt(ageInput.value);
+    if (isNaN(age) || age < 18 || age > 100) {
+      setMessage("Lütfen 18-100 arasında bir yaş girin.", "error");
+      return;
+    }
+
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    const tcID = generateTCID();
+    const birthDate = calculateBirthDate(age);
+    const phone = generatePhoneNumber();
+    const address = addresses[Math.floor(Math.random() * addresses.length)];
+    const email = generateEmail(firstName, lastName);
+    const iban = generateIBAN();
+    const customerID = generateCustomerID();
+
+    displayProfile({
+      name: `${firstName} ${lastName}`,
+      tcID,
+      birthDate,
+      phone,
+      address,
+      email,
+      iban,
+      customerID
+    });
+
+    setMessage("Profil başarıyla oluşturuldu.", "ok");
+  }
+
+  function displayProfile(profile) {
+    profileContainer.innerHTML = `
+      <div class="profile-card">
+        <div class="profile-item">
+          <span class="profile-label">Ad – Soyad</span>
+          <span class="profile-value">${profile.name}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">TC Kimlik No</span>
+          <span class="profile-value">${profile.tcID}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Doğum Tarihi</span>
+          <span class="profile-value">${profile.birthDate}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Telefon</span>
+          <span class="profile-value">${profile.phone}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Adres</span>
+          <span class="profile-value">${profile.address}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">E-Posta</span>
+          <span class="profile-value">${profile.email}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">IBAN</span>
+          <span class="profile-value">${profile.iban}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Müşteri No</span>
+          <span class="profile-value">${profile.customerID}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function setMessage(text, type) {
+    msg.textContent = text;
+    msg.className = type || '';
+  }
+
+  btnGenerate.addEventListener("click", generateProfile);
+  btnClear.addEventListener("click", () => {
+    ageInput.value = "30";
+    msg.textContent = "";
+    msg.className = "";
+    profileContainer.innerHTML = "";
+  });
+
+  // Enter tuşu ile generate
+  ageInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") generateProfile();
+  });
+</script>
+
+</body>
+</html>
