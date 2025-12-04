@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://aylaverse.github.io" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="shared-header.css">
   <style>
     * {
       box-sizing: border-box;
@@ -34,31 +35,7 @@
       margin: 0 auto 24px auto;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-   .logo-icon {
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-right: 8px;
-  user-select: none;
-}
-header .logo-text-main {
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-header .logo-text-sub {
-  opacity: 0.8;
-  font-size: 0.85rem;
-}
+    /* header/logo styles moved to shared-header.css */
 
 
     .logo-text-main {
@@ -102,8 +79,9 @@ header .logo-text-sub {
       text-decoration: none;
       color: inherit;
       transition: transform 0.08s ease, box-shadow 0.08s ease;
-	  transition: transform 0.15s ease, box-shadow 0.15s ease;
-	  }
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      min-height: 150px;
+    }
 
     .card:hover {
       transform: translateY(-2px);
@@ -112,7 +90,7 @@ header .logo-text-sub {
 
     .card-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
     }
@@ -123,12 +101,13 @@ header .logo-text-sub {
     }
 
     .card-tag {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       padding: 3px 8px;
       border-radius: 999px;
       background: #eef2ff;
       color: #4f46e5;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .card-desc {
@@ -140,6 +119,7 @@ header .logo-text-sub {
       margin-top: 6px;
       display: flex;
       justify-content: flex-end;
+      margin-top: auto; /* push footer to bottom so buttons align */
     }
 
     .btn {
@@ -218,6 +198,22 @@ header .logo-text-sub {
         <div class="card-footer">
           <button type="button" class="btn">
             <span>Open XML Editor</span> →
+          </button>
+        </div>
+      </a>
+
+      <!-- Base64 Universal Viewer kartı -->
+      <a class="card" href="base64-universal-viewer.html">
+        <div class="card-header">
+          <div class="card-title">Base64 Universal Viewer</div>
+          <span class="card-tag">Viewer / ZIP / PDF / HTML / Image / XML</span>
+        </div>
+        <div class="card-desc">
+          Paste Base64 or raw HTML and preview content safely — opens HTML, images, XML, PDF, and ZIP files.
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn">
+            <span>Open Base64 Viewer</span> →
           </button>
         </div>
       </a>
