@@ -62,7 +62,11 @@
     /* SVG icons inside buttons/links */
     button svg, a.download-link svg { width:16px; height:16px; display:inline-block; vertical-align:middle; fill:currentColor; }
 
-    h2 { margin: 6px 0 4px; }
+    h2 { margin: 6px 0 4px; font-weight: 700; letter-spacing: -0.2px; }
+
+    /* Make primary text slightly bolder to match XML editor look */
+    p, .note { font-weight: 500; }
+    button { font-weight: 600; }
 
     textarea {
       width: 100%;
@@ -84,7 +88,7 @@
 
     #msg { margin-top: 8px; font-size: 13px; }
     #msg.error { color: #ef4444; font-weight:600; }
-    #msg.ok { color: #16a34a; font-weight:500; }
+    #msg.ok { color: #16a34a; font-weight:600; }
 
     /* Viewer layout with sidebar-like file list card */
     #viewerWrapper { margin-top: 12px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; }
@@ -184,9 +188,8 @@
 </header>
 
 <h2>Base64 Universal Viewer</h2>
-<p style="font-size:13px;color:var(--subtle);">
-  Paste any <b>Base64</b> data here (raw Base64 or <code>data:...;base64,</code> format).<br>
-  You can also paste <b>raw HTML</b> (not Base64-encoded) and it will be displayed safely (scripts disabled).
+<p style="font-size:13px;color:#4b5563;font-weight:500;">
+  Decode, preview and download <b>Base64</b> or raw HTML, images, PDF, XML and ZIP files directly in your browser (scripts are disabled for displayed HTML).
 </p>
 
 <textarea id="b64" placeholder="Paste Base64 or raw HTML here..."></textarea><br>
