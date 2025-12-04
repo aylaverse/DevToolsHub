@@ -5,6 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
   <title>Aylaverse XML Editor</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- CodeMirror 5 (code editor) -->
@@ -63,25 +64,27 @@
 }
 
 
+.editor-container {
+  align-self: flex-start; 
+}
+
+
     .logo {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #4f46e5, #22c55e);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #f9fafb;
-      font-size: 0.9rem;
-      font-weight: 700;
-      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.4);
-    }
+   .logo-icon {
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-right: 8px;
+  user-select: none;
+}
+
 
     .logo-text-main {
       font-size: 1.5rem;
@@ -96,10 +99,21 @@
     .main-layout {
       display: flex;
       gap: 8px;
-      align-items: stretch;
-      max-width: 1400px;
+      align-items: stretch; /* A seçeneği: sidebar ve editor alttan tam hizalı */
+      max-width: none;
       margin: 0 auto;
+      height: calc(100vh - 170px); /* header + toolbar + padding düşülmüş yaklaşık yükseklik */
     }
+	header .logo-text-main {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+header .logo-text-sub {
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
 
     .sidebar {
       flex: 0 0 auto;
@@ -114,6 +128,8 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      height: 100%;
+      min-height: 100%; /* A seçeneği: editör paneliyle birebir hizalı */
     }
 
     .divider {
@@ -169,6 +185,48 @@
       padding: 4px;
       border: 1px solid #e5e7eb;
     }
+.file-item.selected {
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  color: white;
+  font-weight: 600;
+}
+.file-item {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-item:hover::after {
+  content: attr(data-filename);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #111827;
+  color: white;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transform: translateY(4px);
+  font-size: 0.75rem;
+  z-index: 1000;
+}
+.sidebar {
+  transition: width 0.2s ease;
+}
+.sidebar.collapsed {
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+/* collapsed modda tüm içeriği gizle, sadece dar sütun kalsın */
+.sidebar.collapsed .sidebar-header,
+.sidebar.collapsed .file-tree,
+.sidebar.collapsed .sidebar-actions {
+  display: none;
+}
 
     .file-pill {
       border-radius: 999px;
@@ -236,6 +294,8 @@
       flex-direction: column;
       gap: 10px;
       min-width: 0;
+    
+      height: 100%;
     }
 
     #editorContainer {
@@ -244,10 +304,15 @@
       background: #ffffff;
       overflow: hidden;
       box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+    
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
     }
 
     .CodeMirror {
-      height: 65vh;
+      height: 100%;
       background: #ffffff;
       font-size: 0.9rem;
     }
@@ -332,6 +397,15 @@
       color: #111827;
     }
 
+	footer {
+  max-width: 1400px;      
+  margin: 24px auto 0;
+  font-size: 0.78rem;
+  color: #6b7280;
+  text-align: center;     
+}
+
+	
     button {
       border: none;
       border-radius: 999px;
@@ -387,16 +461,44 @@
     }
 
     .status {
-      font-size: 0.8rem;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.02);
       color: #4b5563;
+      min-width: 0;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #9ca3af;
+      flex-shrink: 0;
     }
 
     .status-ok {
-      color: #15803d;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-ok::before {
+      background: #16a34a;
     }
 
     .status-error {
+      background: #fee2e2;
       color: #b91c1c;
+    }
+
+    .status-error::before {
+      background: #dc2626;
     }
 
     @media (max-width: 900px) {
@@ -440,10 +542,9 @@
   </style>
 </head>
 <body>
-  <header>
-  <!-- Logo tıklanınca anasayfaya gider -->
+<header>
   <a href="index.html" class="logo logo-link">
-    <div class="logo-icon">&lt;/&gt;</div>
+    <div class="logo-icon">A</div>
     <div>
       <div class="logo-text-main">Aylaverse XML Editor</div>
       <div class="logo-text-sub">
@@ -452,15 +553,20 @@
     </div>
   </a>
 
-  <!-- Sağda küçük geri dön butonu -->
-  <button
-    type="button"
-    class="secondary"
-    onclick="window.location.href='index.html'"
-  >
-    ← Back to tools
-  </button>
+  <div style="display:flex; gap:10px;">
+    <button
+      type="button"
+      class="secondary"
+      onclick="window.location.href='index.html'"
+    >
+      ← Back to tools
+    </button>
+
+    <!-- 🔹 Yeni Sidebar Toggle Butonu -->
+    <button class="secondary" onclick="toggleSidebar()">☰</button>
+  </div>
 </header>
+
 
 
   <div class="main-layout">
@@ -528,8 +634,8 @@
         <textarea id="plainEditor" spellcheck="false"><?xml version="1.0" encoding="UTF-8"?>
 <root>
     <user id="1" active="true">
-        <name>Derya</name>
-        <role>Engineer</role>
+        <name>Welcome!</name>
+			<role>Hope you're having an amazing day ✨</role>
     </user>
 </root></textarea>
       </div>
@@ -658,38 +764,42 @@
         return;
       }
 
-      files.forEach((file, idx) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "file-pill" + (idx === currentFileIndex ? " active" : "");
+    files.forEach((file, idx) => {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "file-pill" + (idx === currentFileIndex ? " active" : "");
 
-        const left = document.createElement("span");
-        const icon = document.createElement("span");
-        icon.className = "file-pill-icon";
-        icon.textContent = "⟐";
+  // 🔹 Tooltip’te tam adı göstermek için:
+  btn.setAttribute("data-filename", file.name);
 
-        const nameSpan = document.createElement("span");
-        nameSpan.className = "file-pill-name";
-        nameSpan.textContent = file.name;
-        nameSpan.title = file.name;
+  const left = document.createElement("span");
+  const icon = document.createElement("span");
+  icon.className = "file-pill-icon";
+  icon.textContent = "⟐";
 
-        left.appendChild(icon);
-        left.appendChild(nameSpan);
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "file-pill-name";
+  nameSpan.textContent = file.name;
+  nameSpan.title = file.name; // Bunu istersen bırak, istersen silebilirsin
 
-        btn.appendChild(left);
+  left.appendChild(icon);
+  left.appendChild(nameSpan);
 
-        btn.addEventListener("click", () => {
-          if (currentFileIndex >= 0 && files[currentFileIndex]) {
-            files[currentFileIndex].content = getEditorValue();
-          }
-          currentFileIndex = idx;
-          setEditorValue(files[currentFileIndex].content);
-          setStatus(`Editing "${files[currentFileIndex].name}"`, "ok");
-          renderFileList();
-        });
+  btn.appendChild(left);
 
-        fileListInner.appendChild(btn);
-      });
+  btn.addEventListener("click", () => {
+    if (currentFileIndex >= 0 && files[currentFileIndex]) {
+      files[currentFileIndex].content = getEditorValue();
+    }
+    currentFileIndex = idx;
+    setEditorValue(files[currentFileIndex].content);
+    setStatus(`Editing "${files[currentFileIndex].name}"`, "ok");
+    renderFileList();
+  });
+
+  fileListInner.appendChild(btn);
+});
+
     }
 
     function validateXml(xmlText) {
@@ -1075,6 +1185,14 @@
       setStatus(`Deleted "${name}". Now editing "${files[currentFileIndex].name}".`, "ok");
       renderFileList();
     });
+	function toggleSidebar() {
+  document.querySelector(".sidebar").classList.toggle("collapsed");
+}
+
   </script>
+  
+   <footer>
+  © 2025 Aylaverse — Browser-based developer tools.
+</footer>
 </body>
 </html>
